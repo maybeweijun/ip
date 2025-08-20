@@ -1,0 +1,10 @@
+todo read book
+deadline submit assignment /by 2024-09-01
+event project meeting /from 2024-09-02 10:00 /to 2024-09-02 12:00
+mark 1
+mark 2
+mark 3
+unmark 1
+list
+bye
+
