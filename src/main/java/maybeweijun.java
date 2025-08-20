@@ -17,7 +17,7 @@ public class maybeweijun {
     public static void handleUserInput() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         final int MAX_INPUTS = 100;
-        String[] inputs = new String[MAX_INPUTS];
+        Task[] tasks = new Task[MAX_INPUTS];
         int count = 0;
         while (true) {
             try {
@@ -32,15 +32,43 @@ public class maybeweijun {
                 if (input.equalsIgnoreCase("list")) {
                     System.out.println("-----------");
                     for (int i = 0; i < count; i++) {
-                        System.out.println(i+1 + ". " + inputs[i]);
+                        System.out.println((i + 1) + ". " + tasks[i]);
                     }
                     System.out.println("-----------\n");
+                } else if (input.startsWith("mark ")) {
+                    try {
+                        int idx = Integer.parseInt(input.substring(5).trim()) - 1;
+                        if (idx >= 0 && idx < count && tasks[idx] != null) {
+                            tasks[idx].mark();
+                            System.out.println("Marked task " + (idx + 1) + " as done.");
+                            System.out.println(tasks[idx]);
+                        } else {
+                            System.out.println("Invalid task number.");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Please provide a valid task number to mark.");
+                    }
+                } else if (input.startsWith("unmark ")) {
+                    try {
+                        int idx = Integer.parseInt(input.substring(7).trim()) - 1;
+                        if (idx >= 0 && idx < count && tasks[idx] != null) {
+                            tasks[idx].unmark();
+                            System.out.println("Unmarked task " + (idx + 1) + ".");
+                            System.out.println(tasks[idx]);
+                        } else {
+                            System.out.println("Invalid task number.");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Please provide a valid task number to unmark.");
+                    }
                 } else {
                     if (count < MAX_INPUTS) {
-                        inputs[count] = input;
+                        tasks[count] = new Task(input);
+                        System.out.println("-----------\nadded: " + tasks[count] + "\n-----------\n");
                         count++;
+                    } else {
+                        System.out.println("Task list is full. Cannot add more tasks.");
                     }
-                    System.out.println("-----------\nadded: " + input + "\n-----------\n");
                 }
             } catch (IOException e) {
                 System.out.println("An error occurred while reading input.");
@@ -53,4 +81,5 @@ public class maybeweijun {
         System.out.println("Bye. Hope to see you again soon!\n");
     }
 }
+
 
