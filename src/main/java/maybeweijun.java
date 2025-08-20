@@ -16,6 +16,9 @@ public class maybeweijun {
 
     public static void handleUserInput() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        final int MAX_INPUTS = 100;
+        String[] inputs = new String[MAX_INPUTS];
+        int count = 0;
         while (true) {
             try {
                 String input = reader.readLine();
@@ -26,7 +29,19 @@ public class maybeweijun {
                     exit();
                     break;
                 }
-                System.out.println("-----------\n"+input+"\n-----------\n");
+                if (input.equalsIgnoreCase("list")) {
+                    System.out.println("-----------");
+                    for (int i = 0; i < count; i++) {
+                        System.out.println(i+1 + ". " + inputs[i]);
+                    }
+                    System.out.println("-----------\n");
+                } else {
+                    if (count < MAX_INPUTS) {
+                        inputs[count] = input;
+                        count++;
+                    }
+                    System.out.println("-----------\nadded: " + input + "\n-----------\n");
+                }
             } catch (IOException e) {
                 System.out.println("An error occurred while reading input.");
                 break;
