@@ -65,6 +65,10 @@ public class maybeweijun {
                     if (count < MAX_INPUTS) {
                         if(input.startsWith("todo")) {
                             String description = input.substring(5).trim();
+                            if (description.isEmpty()) {
+                                System.out.println("The description of a todo cannot be empty.");
+                                continue;
+                            }
                             //Converts "todo borrow a book from the library     "
                             //To "borrow a book from the library"
                             tasks[count] = new Todo(description);
