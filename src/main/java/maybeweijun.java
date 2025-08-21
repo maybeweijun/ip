@@ -56,7 +56,7 @@ public class maybeweijun {
                     } else {
                         throw new maybeweijunException.InvalidCommandException();
                     }
-                } catch (maybeweijunException e) {
+                } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
             } catch (IOException e) {
