@@ -29,31 +29,35 @@ public class maybeweijun {
                 if (input == null) break;
                 input = input.trim();
 
-                if (input.equalsIgnoreCase("bye")) {
-                    exit();
-                    break;
-                } else if (input.equalsIgnoreCase("list")) {
-                    printTaskList(tasks);
-                } else if (input.startsWith("mark ")) {
-                    handleMark(tasks, input);
-                } else if (input.startsWith("unmark ")) {
-                    handleUnmark(tasks, input);
-                } else if (input.startsWith("delete ")) {
-                    handleDelete(tasks, input);
-                } else if (input.equals("todo")) {
-                    System.out.println("You cannot type todo and not do anything");
-                } else if (input.equals("deadline")) {
-                    System.out.println("You cannot type deadline and not do anything");
-                } else if (input.equals("event")) {
-                    System.out.println("You cannot type event and not do anything");
-                } else if (input.startsWith("todo")) {
-                    handleTodo(tasks, input);
-                } else if (input.startsWith("deadline")) {
-                    handleDeadline(tasks, input);
-                } else if (input.startsWith("event")) {
-                    handleEvent(tasks, input);
-                } else {
-                    System.out.println("Unknown command. Please use 'todo', 'deadline', 'mark', 'unmark', or 'list'.");
+                try {
+                    if (input.equalsIgnoreCase("bye")) {
+                        exit();
+                        break;
+                    } else if (input.equalsIgnoreCase("list")) {
+                        printTaskList(tasks);
+                    } else if (input.startsWith("mark ")) {
+                        handleMark(tasks, input);
+                    } else if (input.startsWith("unmark ")) {
+                        handleUnmark(tasks, input);
+                    } else if (input.startsWith("delete ")) {
+                        handleDelete(tasks, input);
+                    } else if (input.equals("todo")) {
+                        throw new maybeweijunException.OnlyTodoException();
+                    } else if (input.equals("deadline")) {
+                        throw new maybeweijunException.OnlyDeadlineException();
+                    } else if (input.equals("event")) {
+                        throw new maybeweijunException.OnlyEventException();
+                    } else if (input.startsWith("todo")) {
+                        handleTodo(tasks, input);
+                    } else if (input.startsWith("deadline")) {
+                        handleDeadline(tasks, input);
+                    } else if (input.startsWith("event")) {
+                        handleEvent(tasks, input);
+                    } else {
+                        throw new maybeweijunException.InvalidCommandException();
+                    }
+                } catch (maybeweijunException e) {
+                    System.out.println(e.getMessage());
                 }
             } catch (IOException e) {
                 System.out.println("An error occurred while reading input.");
@@ -70,7 +74,7 @@ public class maybeweijun {
         System.out.println("-----------\n");
     }
 
-    private static void handleMark(ArrayList<Task> tasks, String input) {
+    private static void handleMark(ArrayList<Task> tasks, String input) throws maybeweijunException {
         try {
             int idx = Integer.parseInt(input.substring(5).trim()) - 1;
             if (isValidIndex(tasks, idx)) {
@@ -78,14 +82,14 @@ public class maybeweijun {
                 System.out.println("Marked task " + (idx + 1) + " as done.");
                 System.out.println(tasks.get(idx));
             } else {
-                System.out.println("Invalid task number.");
+                throw new maybeweijunException.InvalidTaskNumberException();
             }
         } catch (NumberFormatException e) {
-            System.out.println("Please provide a valid task number to mark.");
+            throw new maybeweijunException.InvalidMarkException();
         }
     }
 
-    private static void handleUnmark(ArrayList<Task> tasks, String input) {
+    private static void handleUnmark(ArrayList<Task> tasks, String input) throws maybeweijunException {
         try {
             int idx = Integer.parseInt(input.substring(7).trim()) - 1;
             if (isValidIndex(tasks, idx)) {
@@ -93,14 +97,14 @@ public class maybeweijun {
                 System.out.println("Unmarked task " + (idx + 1) + ".");
                 System.out.println(tasks.get(idx));
             } else {
-                System.out.println("Invalid task number.");
+                throw new maybeweijunException.InvalidTaskNumberException();
             }
         } catch (NumberFormatException e) {
-            System.out.println("Please provide a valid task number to unmark.");
+            throw new maybeweijunException.InvalidUnmarkException();
         }
     }
 
-    private static void handleDelete(ArrayList<Task> tasks, String input) {
+    private static void handleDelete(ArrayList<Task> tasks, String input) throws maybeweijunException {
         try {
             int idx = Integer.parseInt(input.substring(7).trim()) - 1;
             if (isValidIndex(tasks, idx)) {
@@ -109,40 +113,38 @@ public class maybeweijun {
                 tasks.remove(idx);
                 System.out.println("Now you have " + tasks.size() + " tasks in the list.");
             } else {
-                System.out.println("Invalid task number.");
+                throw new maybeweijunException.InvalidTaskNumberException();
             }
         } catch (NumberFormatException e) {
-            System.out.println("Please provide a valid task number to delete.");
+            throw new maybeweijunException.InvalidDeleteException();
         }
     }
 
-    private static void handleTodo(ArrayList<Task> tasks, String input) {
+    private static void handleTodo(ArrayList<Task> tasks, String input) throws maybeweijunException {
         String description = input.substring(5).trim();
         if (description.isEmpty()) {
-            System.out.println("The description of a todo cannot be empty.");
-            return;
+            throw new maybeweijunException.EmptyTodoException();
         }
         tasks.add(new Todo(description));
         printTaskAdded(tasks);
     }
 
-    private static void handleDeadline(ArrayList<Task> tasks, String input) {
+    private static void handleDeadline(ArrayList<Task> tasks, String input) throws maybeweijunException {
         String[] parts = input.substring(9).split("/by", 2);
         if (parts.length == 2) {
             String description = parts[0].trim();
             String by = parts[1].trim();
             if (description.isEmpty() || by.isEmpty()) {
-                System.out.println("Invalid deadline format. Use: deadline <description> /by <date>");
-                return;
+                throw new maybeweijunException.EmptyDeadlineException();
             }
             tasks.add(new Deadline(description, by));
             printTaskAdded(tasks);
         } else {
-            System.out.println("Invalid deadline format. Use: deadline <description> /by <date>");
+            throw new maybeweijunException.EmptyDeadlineException();
         }
     }
 
-    private static void handleEvent(ArrayList<Task> tasks, String input) {
+    private static void handleEvent(ArrayList<Task> tasks, String input) throws maybeweijunException {
         String[] parts = input.substring(5).split("/from", 2);
         if (parts.length == 2) {
             String description = parts[0].trim();
@@ -151,16 +153,15 @@ public class maybeweijun {
                 String start_datetime = timeParts[0].trim();
                 String end_datetime = timeParts[1].trim();
                 if (description.isEmpty() || start_datetime.isEmpty() || end_datetime.isEmpty()) {
-                    System.out.println("Invalid event format. Use: event <description> /from <start> /to <end>");
-                    return;
+                    throw new maybeweijunException.EmptyEventException();
                 }
                 tasks.add(new Event(description, start_datetime, end_datetime));
                 printTaskAdded(tasks);
             } else {
-                System.out.println("Invalid event format. Use: event <description> /from <start> /to <end>");
+                throw new maybeweijunException.EmptyEventException();
             }
         } else {
-            System.out.println("Invalid event format. Use: event <description> /from <start> /to <end>");
+            throw new maybeweijunException.EmptyEventException();
         }
     }
 
