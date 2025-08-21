@@ -61,6 +61,25 @@ public class maybeweijun {
                     } catch (NumberFormatException e) {
                         System.out.println("Please provide a valid task number to unmark.");
                     }
+                } else if (input.startsWith("delete ")) {
+                    try {
+                        int idx = Integer.parseInt(input.substring(7).trim()) - 1;
+                        if (idx >= 0 && idx < count && tasks[idx] != null) {
+                            System.out.println("Noted. I've removed this task:");
+                            System.out.println(tasks[idx]);
+                            // Shift tasks left to fill the gap
+                            for (int i = idx; i < count - 1; i++) {
+                                tasks[i] = tasks[i + 1];
+                            }
+                            tasks[count - 1] = null;
+                            count--;
+                            System.out.println("Now you have " + count + " tasks in the list.");
+                        } else {
+                            System.out.println("Invalid task number.");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Please provide a valid task number to delete.");
+                    }
                 } else {
                     if (count < MAX_INPUTS) {
                         if(input.startsWith("todo")) {
