@@ -11,7 +11,7 @@ public class maybeweijun {
     }
 
     public static void query() {
-        System.out.println("What can I do for you?\n");
+        System.out.println("What can I do for you? \n");
     }
 
     public static void handleUserInput() {
