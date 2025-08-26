@@ -1,2 +1,2 @@
-T | 1 | homework
+T | 0 | homework
 E | 0 | job | today to tmr
