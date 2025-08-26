@@ -38,11 +38,7 @@ public class Parser {
     }
 
     private static void printTaskList(TaskList tasks) {
-        System.out.println("-----------");
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + ". " + tasks.get(i));
-        }
-        System.out.println("-----------\n");
+        Ui.printTaskList(tasks);
     }
 
     private static void handleMark(TaskList tasks, String input) throws maybeweijunException {
@@ -50,8 +46,7 @@ public class Parser {
             int idx = Integer.parseInt(input.substring(5).trim()) - 1;
             if (tasks.isValidIndex(idx)) {
                 tasks.get(idx).mark();
-                System.out.println("Marked task " + (idx + 1) + " as done.");
-                System.out.println(tasks.get(idx));
+                Ui.printMarked(idx + 1, tasks.get(idx));
             } else {
                 throw new maybeweijunException.InvalidTaskNumberException();
             }
@@ -65,8 +60,7 @@ public class Parser {
             int idx = Integer.parseInt(input.substring(7).trim()) - 1;
             if (tasks.isValidIndex(idx)) {
                 tasks.get(idx).unmark();
-                System.out.println("Unmarked task " + (idx + 1) + ".");
-                System.out.println(tasks.get(idx));
+                Ui.printUnmarked(idx + 1, tasks.get(idx));
             } else {
                 throw new maybeweijunException.InvalidTaskNumberException();
             }
@@ -79,10 +73,9 @@ public class Parser {
         try {
             int idx = Integer.parseInt(input.substring(7).trim()) - 1;
             if (tasks.isValidIndex(idx)) {
-                System.out.println("Noted. I've removed this task:");
-                System.out.println(tasks.get(idx));
+                Task toRemove = tasks.get(idx);
                 tasks.remove(idx);
-                System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                Ui.printDeleted(toRemove, tasks.size());
             } else {
                 throw new maybeweijunException.InvalidTaskNumberException();
             }
@@ -150,6 +143,6 @@ public class Parser {
     }
 
     private static void printTaskAdded(TaskList tasks) {
-        System.out.println("-----------\nadded: " + tasks.get(tasks.size() - 1) + "\n-----------\n");
+        Ui.printTaskAdded(tasks.get(tasks.size() - 1));
     }
 }
