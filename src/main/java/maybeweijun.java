@@ -182,7 +182,7 @@ public class maybeweijun {
     }
 
     public static void saveState(ArrayList<Task> tasks) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
         try (FileWriter writer = new FileWriter("state.txt", false)) {
             for (Task task : tasks) {
                 StringBuilder sb = new StringBuilder();
@@ -214,7 +214,7 @@ public class maybeweijun {
 
     public static ArrayList<Task> loadState() {
         ArrayList<Task> tasks = new ArrayList<>();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
         try (BufferedReader reader = new BufferedReader(new FileReader("state.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
