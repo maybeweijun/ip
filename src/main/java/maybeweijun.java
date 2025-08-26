@@ -1,4 +1,6 @@
 import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ public class maybeweijun {
 
     private static void handleUserInput() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        ArrayList<Task> tasks = new ArrayList<>();
+        ArrayList<Task> tasks = loadState();
         while (true) {
             try {
                 String input = reader.readLine();
@@ -56,6 +58,7 @@ public class maybeweijun {
                     } else {
                         throw new maybeweijunException.InvalidCommandException();
                     }
+                    saveState(tasks);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
@@ -175,6 +178,80 @@ public class maybeweijun {
 
     private static void exit() {
         System.out.println("Bye. Hope to see you again soon!\n");
+    }
+
+    public static void saveState(ArrayList<Task> tasks) {
+        try (FileWriter writer = new FileWriter("state.txt", false)) { // false = overwrite
+            for (Task task : tasks) {
+                StringBuilder sb = new StringBuilder();
+                if (task instanceof Todo) {
+                    sb.append("T | ");
+                } else if (task instanceof Deadline) {
+                    sb.append("D | ");
+                } else if (task instanceof Event) {
+                    sb.append("E | ");
+                }
+                sb.append(task.isDone() ? "1 | " : "0 | ");
+                sb.append(task.getDescription());
+                if (task instanceof Deadline) {
+                    sb.append(" | ").append(((Deadline) task).getBy());
+                } else if (task instanceof Event) {
+                    sb.append(" | ").append(((Event) task).getFrom())
+                      .append(" to ").append(((Event) task).getTo());
+                }
+                writer.write(sb.toString());
+                writer.write(System.lineSeparator());
+            }
+        } catch (IOException e) {
+            System.out.println("Failed to save state: " + e.getMessage());
+        }
+    }
+
+    public static ArrayList<Task> loadState() {
+        ArrayList<Task> tasks = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader("state.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length < 3) continue; // skip invalid lines
+                String type = parts[0].trim();
+                boolean isDone = parts[1].trim().equals("1");
+                String description = parts[2].trim();
+
+                switch (type) {
+                    case "T":
+                        Task todo = new Todo(description);
+                        if (isDone) todo.mark();
+                        tasks.add(todo);
+                        break;
+                    case "D":
+                        if (parts.length >= 4) {
+                            String by = parts[3].trim();
+                            Task deadline = new Deadline(description, by);
+                            if (isDone) deadline.mark();
+                            tasks.add(deadline);
+                        }
+                        break;
+                    case "E":
+                        if (parts.length >= 4) {
+                            // Expecting: E | 0 | desc | from to to
+                            String[] eventTimes = parts[3].split(" to ", 2);
+                            String from = eventTimes[0].trim();
+                            String to = eventTimes.length > 1 ? eventTimes[1].trim() : "";
+                            Task event = new Event(description, from, to);
+                            if (isDone) event.mark();
+                            tasks.add(event);
+                        }
+                        break;
+                    default:
+                        // Unknown type, skip
+                        break;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Failed to load state: " + e.getMessage());
+        }
+        return tasks;
     }
 }
 
