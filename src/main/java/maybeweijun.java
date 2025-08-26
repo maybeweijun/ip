@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 public class maybeweijun {
 
@@ -141,6 +142,12 @@ public class maybeweijun {
             if (description.isEmpty() || by.isEmpty()) {
                 throw new maybeweijunException.EmptyDeadlineException();
             }
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+                LocalDateTime.parse(by, formatter);
+            } catch (Exception e) {
+                throw new maybeweijunException.InvalidDateTimeException();
+            }
             tasks.add(new Deadline(description, by));
             printTaskAdded(tasks);
         } else {
@@ -158,6 +165,13 @@ public class maybeweijun {
                 String end_datetime = timeParts[1].trim();
                 if (description.isEmpty() || start_datetime.isEmpty() || end_datetime.isEmpty()) {
                     throw new maybeweijunException.EmptyEventException();
+                }
+                try {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+                    LocalDateTime.parse(start_datetime, formatter);
+                    LocalDateTime.parse(end_datetime, formatter);
+                } catch (Exception e) {
+                    throw new maybeweijunException.InvalidDateTimeException();
                 }
                 tasks.add(new Event(description, start_datetime, end_datetime));
                 printTaskAdded(tasks);
