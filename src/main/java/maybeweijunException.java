@@ -22,6 +22,15 @@ public class maybeweijunException extends Exception {
         }
     }
 
+    public static class InvalidDateTimeException extends maybeweijunException {
+        public InvalidDateTimeException() {
+            super("Invalid date/time format. Please use 'yyyy-MM-dd HHmm'.");
+        }
+        public InvalidDateTimeException(String message) {
+            super(message);
+        }
+    }
+
     public static class EmptyTodoException extends maybeweijunException {
         public EmptyTodoException() {
             super("The description of a todo cannot be empty.");
