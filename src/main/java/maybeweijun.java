@@ -46,7 +46,7 @@ public class maybeweijun {
             }
         }
     }
-
+    /**
     private static void printTaskList(TaskList tasks) {
         System.out.println("-----------");
         for (int i = 0; i < tasks.size(); i++) {
@@ -158,7 +158,7 @@ public class maybeweijun {
             throw new maybeweijunException.EmptyEventException();
         }
     }
-
+    */
     private static void printTaskAdded(TaskList tasks) {
         System.out.println("-----------\nadded: " + tasks.get(tasks.size() - 1) + "\n-----------\n");
     }
