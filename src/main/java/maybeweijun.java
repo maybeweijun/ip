@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
@@ -24,7 +23,7 @@ public class maybeweijun {
 
     private static void handleUserInput() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        ArrayList<Task> tasks = new ArrayList<>(STORAGE.load());
+        TaskList tasks = new TaskList(STORAGE.load());
         while (true) {
             try {
                 String input = reader.readLine();
@@ -69,7 +68,7 @@ public class maybeweijun {
         }
     }
 
-    private static void printTaskList(ArrayList<Task> tasks) {
+    private static void printTaskList(TaskList tasks) {
         System.out.println("-----------");
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println((i + 1) + ". " + tasks.get(i));
@@ -77,10 +76,10 @@ public class maybeweijun {
         System.out.println("-----------\n");
     }
 
-    private static void handleMark(ArrayList<Task> tasks, String input) throws maybeweijunException {
+    private static void handleMark(TaskList tasks, String input) throws maybeweijunException {
         try {
             int idx = Integer.parseInt(input.substring(5).trim()) - 1;
-            if (isValidIndex(tasks, idx)) {
+            if (tasks.isValidIndex(idx)) {
                 tasks.get(idx).mark();
                 System.out.println("Marked task " + (idx + 1) + " as done.");
                 System.out.println(tasks.get(idx));
@@ -92,10 +91,10 @@ public class maybeweijun {
         }
     }
 
-    private static void handleUnmark(ArrayList<Task> tasks, String input) throws maybeweijunException {
+    private static void handleUnmark(TaskList tasks, String input) throws maybeweijunException {
         try {
             int idx = Integer.parseInt(input.substring(7).trim()) - 1;
-            if (isValidIndex(tasks, idx)) {
+            if (tasks.isValidIndex(idx)) {
                 tasks.get(idx).unmark();
                 System.out.println("Unmarked task " + (idx + 1) + ".");
                 System.out.println(tasks.get(idx));
@@ -107,10 +106,10 @@ public class maybeweijun {
         }
     }
 
-    private static void handleDelete(ArrayList<Task> tasks, String input) throws maybeweijunException {
+    private static void handleDelete(TaskList tasks, String input) throws maybeweijunException {
         try {
             int idx = Integer.parseInt(input.substring(7).trim()) - 1;
-            if (isValidIndex(tasks, idx)) {
+            if (tasks.isValidIndex(idx)) {
                 System.out.println("Noted. I've removed this task:");
                 System.out.println(tasks.get(idx));
                 tasks.remove(idx);
@@ -123,7 +122,7 @@ public class maybeweijun {
         }
     }
 
-    private static void handleTodo(ArrayList<Task> tasks, String input) throws maybeweijunException {
+    private static void handleTodo(TaskList tasks, String input) throws maybeweijunException {
         String description = input.substring(5).trim();
         if (description.isEmpty()) {
             throw new maybeweijunException.EmptyTodoException();
@@ -132,7 +131,7 @@ public class maybeweijun {
         printTaskAdded(tasks);
     }
 
-    private static void handleDeadline(ArrayList<Task> tasks, String input) throws maybeweijunException {
+    private static void handleDeadline(TaskList tasks, String input) throws maybeweijunException {
         String[] parts = input.substring(9).split("/by", 2);
         if (parts.length == 2) {
             String description = parts[0].trim();
@@ -153,7 +152,7 @@ public class maybeweijun {
         }
     }
 
-    private static void handleEvent(ArrayList<Task> tasks, String input) throws maybeweijunException {
+    private static void handleEvent(TaskList tasks, String input) throws maybeweijunException {
         String[] parts = input.substring(5).split("/from", 2);
         if (parts.length == 2) {
             String description = parts[0].trim();
@@ -181,24 +180,20 @@ public class maybeweijun {
         }
     }
 
-    private static void printTaskAdded(ArrayList<Task> tasks) {
+    private static void printTaskAdded(TaskList tasks) {
         System.out.println("-----------\nadded: " + tasks.get(tasks.size() - 1) + "\n-----------\n");
-    }
-
-    private static boolean isValidIndex(ArrayList<Task> tasks, int idx) {
-        return idx >= 0 && idx < tasks.size();
     }
 
     private static void exit() {
         System.out.println("Bye. Hope to see you again soon!\n");
     }
 
-    public static void saveState(ArrayList<Task> tasks) {
-        STORAGE.save(tasks);
+    public static void saveState(TaskList tasks) {
+        STORAGE.save(tasks.toList());
     }
 
-    public static ArrayList<Task> loadState() {
-        return new ArrayList<>(STORAGE.load());
+    public static TaskList loadState() {
+        return new TaskList(STORAGE.load());
     }
 }
 
