@@ -31,31 +31,10 @@ public class maybeweijun {
                 input = input.trim();
 
                 try {
-                    if (input.equalsIgnoreCase("bye")) {
+                    boolean shouldExit = Parser.process(input, tasks);
+                    if (shouldExit) {
                         exit();
                         break;
-                    } else if (input.equalsIgnoreCase("list")) {
-                        printTaskList(tasks);
-                    } else if (input.startsWith("mark ")) {
-                        handleMark(tasks, input);
-                    } else if (input.startsWith("unmark ")) {
-                        handleUnmark(tasks, input);
-                    } else if (input.startsWith("delete ")) {
-                        handleDelete(tasks, input);
-                    } else if (input.equals("todo")) {
-                        throw new maybeweijunException.OnlyTodoException();
-                    } else if (input.equals("deadline")) {
-                        throw new maybeweijunException.OnlyDeadlineException();
-                    } else if (input.equals("event")) {
-                        throw new maybeweijunException.OnlyEventException();
-                    } else if (input.startsWith("todo")) {
-                        handleTodo(tasks, input);
-                    } else if (input.startsWith("deadline")) {
-                        handleDeadline(tasks, input);
-                    } else if (input.startsWith("event")) {
-                        handleEvent(tasks, input);
-                    } else {
-                        throw new maybeweijunException.InvalidCommandException();
                     }
                     saveState(tasks);
                 } catch (Exception e) {
