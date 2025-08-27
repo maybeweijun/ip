@@ -1,3 +1,8 @@
+package maybeweijun.ui;
+
+import maybeweijun.task.Task;
+import maybeweijun.task.TaskList;
+
 public class Ui {
     public void printLogo() {
         String logo = "[m-a-y-b-e-w-e-i-j-u-n]";

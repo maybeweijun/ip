@@ -1,3 +1,5 @@
+package maybeweijun.storage;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -5,6 +7,11 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import maybeweijun.task.Deadline;
+import maybeweijun.task.Event;
+import maybeweijun.task.Task;
+import maybeweijun.task.Todo;
 
 public class Storage {
     private final String filePath;
