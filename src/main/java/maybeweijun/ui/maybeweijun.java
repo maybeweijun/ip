@@ -12,7 +12,7 @@ import maybeweijun.task.TaskList;
  * Entry point for the application. Initializes storage, ui, and task list,
  * then reads user input in a loop and delegates command processing to the parser.
  */
-public class maybeweijun {
+public class MaybeWeijun {
     private static final Storage STORAGE = new Storage("src/main/java/maybeweijun/storage/state.txt");
     private static final Ui UI = new Ui();
     private static final TaskList tasks = new TaskList(STORAGE.load());
@@ -48,7 +48,6 @@ public class maybeweijun {
      */
     private static void handleUserInput() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
 
         while (true) {
             try {
@@ -98,5 +97,3 @@ public class maybeweijun {
         return new TaskList(STORAGE.load());
     }
 }
-
-

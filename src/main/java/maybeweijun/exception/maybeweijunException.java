@@ -4,22 +4,22 @@ package maybeweijun.exception;
  * Root exception type for the application. Specific error cases are represented
  * as nested static subclasses to provide semantic meaning and user-friendly messages.
  */
-public class maybeweijunException extends Exception {
-    public maybeweijunException() {
+public class MaybeWeijunException extends Exception {
+    public MaybeWeijunException() {
         super();
     }
 
-    public maybeweijunException(String message) {
+    public MaybeWeijunException(String message) {
         super(message);
     }
 
-    public static class InvalidCommandException extends maybeweijunException {
+    public static class InvalidCommandException extends MaybeWeijunException {
         public InvalidCommandException() {
             super("Unknown command. Please use 'todo', 'deadline', 'mark', 'unmark', or 'list'.");
         }
     }
 
-    public static class DateTimeParseException extends maybeweijunException {
+    public static class DateTimeParseException extends MaybeWeijunException {
         public DateTimeParseException() {
             super("Invalid date/time format found in file");
         }
@@ -27,7 +27,8 @@ public class maybeweijunException extends Exception {
             super(message);
         }
     }
-    public static class InvalidParametersException extends maybeweijunException {
+
+    public static class InvalidParametersException extends MaybeWeijunException {
         public InvalidParametersException() {
             super("Invalid parameters. Please check your input.");
         }
@@ -36,7 +37,7 @@ public class maybeweijunException extends Exception {
         }
     }
 
-    public static class InvalidDateTimeException extends maybeweijunException {
+    public static class InvalidDateTimeException extends MaybeWeijunException {
         public InvalidDateTimeException() {
             super("Invalid date/time format. Please use 'yyyy-MM-dd HHmm'.");
         }
@@ -45,7 +46,7 @@ public class maybeweijunException extends Exception {
         }
     }
 
-    public static class EmptyTodoException extends maybeweijunException {
+    public static class EmptyTodoException extends MaybeWeijunException {
         public EmptyTodoException() {
             super("The description of a todo cannot be empty.");
         }
@@ -54,7 +55,7 @@ public class maybeweijunException extends Exception {
         }
     }
 
-    public static class EmptyDeadlineException extends maybeweijunException {
+    public static class EmptyDeadlineException extends MaybeWeijunException {
         public EmptyDeadlineException() {
             super("Invalid deadline format. Use: deadline <description> /by <date>");
         }
@@ -63,7 +64,7 @@ public class maybeweijunException extends Exception {
         }
     }
 
-    public static class EmptyEventException extends maybeweijunException {
+    public static class EmptyEventException extends MaybeWeijunException {
         public EmptyEventException() {
             super("Invalid event format. Use: event <description> /from <start> /to <end>");
         }
@@ -72,7 +73,7 @@ public class maybeweijunException extends Exception {
         }
     }
 
-    public static class InvalidTaskNumberException extends maybeweijunException {
+    public static class InvalidTaskNumberException extends MaybeWeijunException {
         public InvalidTaskNumberException() {
             super("Invalid task number.");
         }
@@ -81,53 +82,52 @@ public class maybeweijunException extends Exception {
         }
     }
 
-    public static class InvalidMarkException extends maybeweijunException {
+    public static class InvalidMarkException extends MaybeWeijunException {
         public InvalidMarkException() {
             super("Please provide a valid task number to mark.");
         }
     }
 
-    public static class InvalidUnmarkException extends maybeweijunException {
+    public static class InvalidUnmarkException extends MaybeWeijunException {
         public InvalidUnmarkException() {
             super("Please provide a valid task number to unmark.");
         }
     }
 
-    public static class InvalidDeleteException extends maybeweijunException {
+    public static class InvalidDeleteException extends MaybeWeijunException {
         public InvalidDeleteException() {
             super("Please provide a valid task number to delete.");
         }
     }
 
-    public static class OnlyTodoException extends maybeweijunException {
+    public static class OnlyTodoException extends MaybeWeijunException {
         public OnlyTodoException() {
             super("You cannot type todo and not do anything");
         }
     }
 
-    public static class OnlyDeadlineException extends maybeweijunException {
+    public static class OnlyDeadlineException extends MaybeWeijunException {
         public OnlyDeadlineException() {
             super("You cannot type deadline and not do anything");
         }
     }
 
-    public static class OnlyEventException extends maybeweijunException {
+    public static class OnlyEventException extends MaybeWeijunException {
         public OnlyEventException() {
             super("You cannot type event and not do anything");
         }
     }
 
-        public static class InvalidDateRangeException extends maybeweijunException {
-            public InvalidDateRangeException() {
-                super("End date must be after start date");
-            }
-            public InvalidDateRangeException(String message) {
-                super(message);
-            }
+    public static class InvalidDateRangeException extends MaybeWeijunException {
+        public InvalidDateRangeException() {
+            super("End date must be after start date");
         }
+        public InvalidDateRangeException(String message) {
+            super(message);
+        }
+    }
 
-    // Storage-related exceptions
-    public static class StorageLoadException extends maybeweijunException {
+    public static class StorageLoadException extends MaybeWeijunException {
         public StorageLoadException() {
             super("Failed to load storage file.");
         }
@@ -136,7 +136,7 @@ public class maybeweijunException extends Exception {
         }
     }
 
-    public static class StorageSaveException extends maybeweijunException {
+    public static class StorageSaveException extends MaybeWeijunException {
         public StorageSaveException() {
             super("Failed to save storage file.");
         }
@@ -145,7 +145,7 @@ public class maybeweijunException extends Exception {
         }
     }
 
-    public static class InvalidStorageFormatException extends maybeweijunException {
+    public static class InvalidStorageFormatException extends MaybeWeijunException {
         public InvalidStorageFormatException() {
             super("Invalid storage file format.");
         }
@@ -153,5 +153,4 @@ public class maybeweijunException extends Exception {
             super(message);
         }
     }
-
 }
