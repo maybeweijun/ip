@@ -3,7 +3,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Parser {
 
-    public static boolean process(String input, TaskList tasks) throws maybeweijunException {
+    public static boolean process(String input, TaskList tasks, Ui ui) throws maybeweijunException {
         if (input == null) {
             return false;
         }
@@ -12,13 +12,13 @@ public class Parser {
         if (input.equalsIgnoreCase("bye")) {
             return true;
         } else if (input.equalsIgnoreCase("list")) {
-            printTaskList(tasks);
+            printTaskList(tasks, ui);
         } else if (input.startsWith("mark ")) {
-            handleMark(tasks, input);
+            handleMark(tasks, input, ui);
         } else if (input.startsWith("unmark ")) {
-            handleUnmark(tasks, input);
+            handleUnmark(tasks, input, ui);
         } else if (input.startsWith("delete ")) {
-            handleDelete(tasks, input);
+            handleDelete(tasks, input, ui);
         } else if (input.equals("todo")) {
             throw new maybeweijunException.OnlyTodoException();
         } else if (input.equals("deadline")) {
@@ -26,27 +26,27 @@ public class Parser {
         } else if (input.equals("event")) {
             throw new maybeweijunException.OnlyEventException();
         } else if (input.startsWith("todo")) {
-            handleTodo(tasks, input);
+            handleTodo(tasks, input, ui);
         } else if (input.startsWith("deadline")) {
-            handleDeadline(tasks, input);
+            handleDeadline(tasks, input, ui);
         } else if (input.startsWith("event")) {
-            handleEvent(tasks, input);
+            handleEvent(tasks, input, ui);
         } else {
             throw new maybeweijunException.InvalidCommandException();
         }
         return false;
     }
 
-    private static void printTaskList(TaskList tasks) {
-        Ui.printTaskList(tasks);
+    private static void printTaskList(TaskList tasks, Ui ui) {
+        ui.printTaskList(tasks);
     }
 
-    private static void handleMark(TaskList tasks, String input) throws maybeweijunException {
+    private static void handleMark(TaskList tasks, String input, Ui ui) throws maybeweijunException {
         try {
             int idx = Integer.parseInt(input.substring(5).trim()) - 1;
             if (tasks.isValidIndex(idx)) {
                 tasks.get(idx).mark();
-                Ui.printMarked(idx + 1, tasks.get(idx));
+                ui.printMarked(idx + 1, tasks.get(idx));
             } else {
                 throw new maybeweijunException.InvalidTaskNumberException();
             }
@@ -55,12 +55,12 @@ public class Parser {
         }
     }
 
-    private static void handleUnmark(TaskList tasks, String input) throws maybeweijunException {
+    private static void handleUnmark(TaskList tasks, String input, Ui ui) throws maybeweijunException {
         try {
             int idx = Integer.parseInt(input.substring(7).trim()) - 1;
             if (tasks.isValidIndex(idx)) {
                 tasks.get(idx).unmark();
-                Ui.printUnmarked(idx + 1, tasks.get(idx));
+                ui.printUnmarked(idx + 1, tasks.get(idx));
             } else {
                 throw new maybeweijunException.InvalidTaskNumberException();
             }
@@ -69,13 +69,13 @@ public class Parser {
         }
     }
 
-    private static void handleDelete(TaskList tasks, String input) throws maybeweijunException {
+    private static void handleDelete(TaskList tasks, String input, Ui ui) throws maybeweijunException {
         try {
             int idx = Integer.parseInt(input.substring(7).trim()) - 1;
             if (tasks.isValidIndex(idx)) {
                 Task toRemove = tasks.get(idx);
                 tasks.remove(idx);
-                Ui.printDeleted(toRemove, tasks.size());
+                ui.printDeleted(toRemove, tasks.size());
             } else {
                 throw new maybeweijunException.InvalidTaskNumberException();
             }
@@ -84,16 +84,16 @@ public class Parser {
         }
     }
 
-    private static void handleTodo(TaskList tasks, String input) throws maybeweijunException {
+    private static void handleTodo(TaskList tasks, String input, Ui ui) throws maybeweijunException {
         String description = input.substring(5).trim();
         if (description.isEmpty()) {
             throw new maybeweijunException.EmptyTodoException();
         }
         tasks.add(new Todo(description));
-        printTaskAdded(tasks);
+        printTaskAdded(tasks, ui);
     }
 
-    private static void handleDeadline(TaskList tasks, String input) throws maybeweijunException {
+    private static void handleDeadline(TaskList tasks, String input, Ui ui) throws maybeweijunException {
         String[] parts = input.substring(9).split("/by", 2);
         if (parts.length == 2) {
             String description = parts[0].trim();
@@ -108,13 +108,13 @@ public class Parser {
                 throw new maybeweijunException.InvalidDateTimeException();
             }
             tasks.add(new Deadline(description, by));
-            printTaskAdded(tasks);
+            printTaskAdded(tasks, ui);
         } else {
             throw new maybeweijunException.EmptyDeadlineException();
         }
     }
 
-    private static void handleEvent(TaskList tasks, String input) throws maybeweijunException {
+    private static void handleEvent(TaskList tasks, String input, Ui ui) throws maybeweijunException {
         String[] parts = input.substring(5).split("/from", 2);
         if (parts.length == 2) {
             String description = parts[0].trim();
@@ -133,7 +133,7 @@ public class Parser {
                     throw new maybeweijunException.InvalidDateTimeException();
                 }
                 tasks.add(new Event(description, start_datetime, end_datetime));
-                printTaskAdded(tasks);
+                printTaskAdded(tasks, ui);
             } else {
                 throw new maybeweijunException.EmptyEventException();
             }
@@ -142,7 +142,7 @@ public class Parser {
         }
     }
 
-    private static void printTaskAdded(TaskList tasks) {
-        Ui.printTaskAdded(tasks.get(tasks.size() - 1));
+    private static void printTaskAdded(TaskList tasks, Ui ui) {
+        ui.printTaskAdded(tasks.get(tasks.size() - 1));
     }
 }

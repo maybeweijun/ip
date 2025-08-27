@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 
 public class maybeweijun {
     private static final Storage STORAGE = new Storage("state.txt");
+    private static final Ui UI = new Ui();
+    private static final TaskList tasks = new TaskList(STORAGE.load());
+
     public static void main(String[] args) {
         printLogo();
         printQuery();
@@ -13,16 +16,17 @@ public class maybeweijun {
     }
 
     private static void printLogo() {
-        Ui.printLogo();
+        UI.printLogo();
     }
 
     private static void printQuery() {
-        Ui.printQuery();
+        UI.printQuery();
     }
 
     private static void handleUserInput() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        TaskList tasks = new TaskList(STORAGE.load());
+
+
         while (true) {
             try {
                 String input = reader.readLine();
@@ -30,14 +34,14 @@ public class maybeweijun {
                 input = input.trim();
 
                 try {
-                    boolean shouldExit = Parser.process(input, tasks);
+                    boolean shouldExit = Parser.process(input, tasks, UI);
                     if (shouldExit) {
                         exit();
                         break;
                     }
                     saveState(tasks);
                 } catch (Exception e) {
-                    Ui.printError(e.getMessage());
+                    UI.printError(e.getMessage());
                 }
             } catch (IOException e) {
                 System.out.println("An error occurred while reading input.");
@@ -48,7 +52,7 @@ public class maybeweijun {
 
 
     private static void exit() {
-        Ui.printExit();
+        UI.printExit();
     }
 
     public static void saveState(TaskList tasks) {
