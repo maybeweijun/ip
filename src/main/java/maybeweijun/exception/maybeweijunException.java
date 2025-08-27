@@ -15,6 +15,14 @@ public class maybeweijunException extends Exception {
         }
     }
 
+    public static class DateTimeParseException extends maybeweijunException {
+        public DateTimeParseException() {
+            super("Invalid date/time format found in file");
+        }
+        public DateTimeParseException(String message) {
+            super(message);
+        }
+    }
     public static class InvalidParametersException extends maybeweijunException {
         public InvalidParametersException() {
             super("Invalid parameters. Please check your input.");
@@ -102,6 +110,43 @@ public class maybeweijunException extends Exception {
     public static class OnlyEventException extends maybeweijunException {
         public OnlyEventException() {
             super("You cannot type event and not do anything");
+        }
+    }
+
+        public static class InvalidDateRangeException extends maybeweijunException {
+            public InvalidDateRangeException() {
+                super("End date must be after start date");
+            }
+            public InvalidDateRangeException(String message) {
+                super(message);
+            }
+        }
+
+    // Storage-related exceptions
+    public static class StorageLoadException extends maybeweijunException {
+        public StorageLoadException() {
+            super("Failed to load storage file.");
+        }
+        public StorageLoadException(String message) {
+            super(message);
+        }
+    }
+
+    public static class StorageSaveException extends maybeweijunException {
+        public StorageSaveException() {
+            super("Failed to save storage file.");
+        }
+        public StorageSaveException(String message) {
+            super(message);
+        }
+    }
+
+    public static class InvalidStorageFormatException extends maybeweijunException {
+        public InvalidStorageFormatException() {
+            super("Invalid storage file format.");
+        }
+        public InvalidStorageFormatException(String message) {
+            super(message);
         }
     }
 

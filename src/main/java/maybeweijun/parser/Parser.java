@@ -135,12 +135,17 @@ public class Parser {
                 if (description.isEmpty() || start_datetime.isEmpty() || end_datetime.isEmpty()) {
                     throw new maybeweijunException.EmptyEventException();
                 }
+                LocalDateTime start;
+                LocalDateTime end;
                 try {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-                    LocalDateTime.parse(start_datetime, formatter);
-                    LocalDateTime.parse(end_datetime, formatter);
+                    start = LocalDateTime.parse(start_datetime, formatter);
+                    end = LocalDateTime.parse(end_datetime, formatter);
                 } catch (Exception e) {
                     throw new maybeweijunException.InvalidDateTimeException();
+                }
+                if (!end.isAfter(start)) {
+                    throw new maybeweijunException.InvalidDateRangeException();
                 }
                 tasks.add(new Event(description, start_datetime, end_datetime));
                 printTaskAdded(tasks, ui);

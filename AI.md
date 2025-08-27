@@ -7,3 +7,8 @@ try (FileWriter writer = new FileWriter(filePath, false)) {
 stringBuilder is an API that I learned from asking AI as I learned that it is a good and
 clean way to construct strings before writing them into a file.
 
+Class affected : General
+Prompt : Based on the test cases I provided, can you provide some test cases which stretches the edge cases out of my test scenarios?
+Output : I provided some test cases that stretches the edge cases out of my test scenarios.
+Interesting learnings : We can use AI to help us generate large test cases at scale, and the AI even
+catches some of the edge cases that I have missed. Moving forward, I will use AI and my own thinking to make better test cases
