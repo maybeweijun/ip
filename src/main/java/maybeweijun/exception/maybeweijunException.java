@@ -19,6 +19,14 @@ public class MaybeWeijunException extends Exception {
         }
     }
 
+    public static class EmptyFindException extends MaybeWeijunException {
+        public EmptyFindException() {
+            super("The description of a find cannot be empty.");
+        }
+        public EmptyFindException(String message) {
+            super(message);
+        }
+    }
     public static class DateTimeParseException extends MaybeWeijunException {
         public DateTimeParseException() {
             super("Invalid date/time format found in file");

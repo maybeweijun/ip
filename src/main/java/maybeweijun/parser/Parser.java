@@ -41,6 +41,8 @@ public class Parser {
             handleDeadline(tasks, input, ui);
         } else if (input.startsWith("event")) {
             handleEvent(tasks, input, ui);
+        } else if (input.startsWith("find ")) {
+            handleFind(tasks, input, ui);
         } else {
             throw new MaybeWeijunException.InvalidCommandException();
         }
@@ -94,6 +96,28 @@ public class Parser {
         }
     }
 
+    /**
+     * Gives user a way to find task by searchng for keyword in the task description.
+     * Lists out the tasks given the
+     * @param tasks
+     * @param input
+     * @param ui
+     * @throws MaybeWeijunException
+     */
+    private static void handleFind(TaskList tasks, String input, Ui ui) throws MaybeWeijunException {
+        String description = input.substring(5).trim(); // Retrieve description
+        if (description.isEmpty()) {
+            throw new MaybeWeijunException.EmptyFindException();
+        }
+        TaskList foundTasks = new TaskList();
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            if (task.getDescription().toLowerCase().contains(description.toLowerCase())) {
+                foundTasks.add(task);
+            }
+        }
+        ui.printTaskList(foundTasks);
+    }
     private static void handleTodo(TaskList tasks, String input, Ui ui) throws MaybeWeijunException {
         String description = input.substring(5).trim();
         if (description.isEmpty()) {
