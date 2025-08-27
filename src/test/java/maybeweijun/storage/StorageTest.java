@@ -1,5 +1,6 @@
 package maybeweijun.storage;
 
+import maybeweijun.exception.MaybeWeijunException;
 import maybeweijun.task.Deadline;
 import maybeweijun.task.Event;
 import maybeweijun.task.Task;
@@ -127,7 +128,7 @@ class StorageTest {
         Files.write(file, lines, StandardCharsets.UTF_8);
 
         Storage storage = new Storage(file.toString());
-        assertThrows(maybeweijunException.InvalidStorageFormatException.class, storage::loadOrThrow);
+        assertThrows(MaybeWeijunException.InvalidStorageFormatException.class, storage::loadOrThrow);
     }
 
     @Test
@@ -136,6 +137,6 @@ class StorageTest {
         List<Task> tasks = new ArrayList<>();
         tasks.add(new Todo("x"));
 
-        assertThrows(maybeweijunException.StorageSaveException.class, () -> storage.saveOrThrow(tasks));
+        assertThrows(MaybeWeijunException.StorageSaveException.class, () -> storage.saveOrThrow(tasks));
     }
 }
