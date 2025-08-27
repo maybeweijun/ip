@@ -30,7 +30,7 @@ test {
 }
 
 application {
-    mainClass.set("maybeweijun.ui.maybeweijun")
+    mainClass.set("maybeweijun.ui.MaybeWeijun")
 }
 
 checkstyle {

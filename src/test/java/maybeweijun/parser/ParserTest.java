@@ -1,6 +1,6 @@
 package maybeweijun.parser;
 
-import maybeweijun.exception.maybeweijunException;
+import maybeweijun.exception.MaybeWeijunException;
 import maybeweijun.task.Deadline;
 import maybeweijun.task.Event;
 import maybeweijun.task.Task;
@@ -96,7 +96,7 @@ class ParserTest {
 
     @Test
     void process_todo_onlyKeyword_throwsOnlyTodo() {
-        assertThrows(maybeweijunException.OnlyTodoException.class,
+        assertThrows(MaybeWeijunException.OnlyTodoException.class,
                 () -> Parser.process("todo", tasks, ui));
     }
 
@@ -113,25 +113,25 @@ class ParserTest {
 
     @Test
     void process_deadline_onlyKeyword_throwsOnlyDeadline() {
-        assertThrows(maybeweijunException.OnlyDeadlineException.class,
+        assertThrows(MaybeWeijunException.OnlyDeadlineException.class,
                 () -> Parser.process("deadline", tasks, ui));
     }
 
     @Test
     void process_deadline_missingBy_throwsEmptyDeadline() {
-        assertThrows(maybeweijunException.EmptyDeadlineException.class,
+        assertThrows(MaybeWeijunException.EmptyDeadlineException.class,
                 () -> Parser.process("deadline finish report", tasks, ui));
     }
 
     @Test
     void process_deadline_emptyParts_throwsEmptyDeadline() {
-        assertThrows(maybeweijunException.EmptyDeadlineException.class,
+        assertThrows(MaybeWeijunException.EmptyDeadlineException.class,
                 () -> Parser.process("deadline    /by   ", tasks, ui));
     }
 
     @Test
     void process_deadline_invalidDate_throwsInvalidDateTime() {
-        assertThrows(maybeweijunException.InvalidDateTimeException.class,
+        assertThrows(MaybeWeijunException.InvalidDateTimeException.class,
                 () -> Parser.process("deadline finish /by 2023-13-01 2500", tasks, ui));
     }
 
@@ -146,25 +146,25 @@ class ParserTest {
 
     @Test
     void process_event_onlyKeyword_throwsOnlyEvent() {
-        assertThrows(maybeweijunException.OnlyEventException.class,
+        assertThrows(MaybeWeijunException.OnlyEventException.class,
                 () -> Parser.process("event", tasks, ui));
     }
 
     @Test
     void process_event_missingFromTo_throwsEmptyEvent() {
-        assertThrows(maybeweijunException.EmptyEventException.class,
+        assertThrows(MaybeWeijunException.EmptyEventException.class,
                 () -> Parser.process("event meeting", tasks, ui));
-        assertThrows(maybeweijunException.EmptyEventException.class,
+        assertThrows(MaybeWeijunException.EmptyEventException.class,
                 () -> Parser.process("event meeting /from 2025-01-01 0900", tasks, ui));
-        assertThrows(maybeweijunException.EmptyEventException.class,
+        assertThrows(MaybeWeijunException.EmptyEventException.class,
                 () -> Parser.process("event  /from 2025-01-01 0900 /to 2025-01-01 1000", tasks, ui));
     }
 
     @Test
     void process_event_invalidDate_throwsInvalidDateTime() {
-        assertThrows(maybeweijunException.InvalidDateTimeException.class,
+        assertThrows(MaybeWeijunException.InvalidDateTimeException.class,
                 () -> Parser.process("event meet /from 2025-99-01 0900 /to 2025-01-01 1000", tasks, ui));
-        assertThrows(maybeweijunException.InvalidDateTimeException.class,
+        assertThrows(MaybeWeijunException.InvalidDateTimeException.class,
                 () -> Parser.process("event meet /from 2025-01-01 0900 /to 2025-01-01 1060", tasks, ui));
     }
 
@@ -189,13 +189,13 @@ class ParserTest {
 
     @Test
     void process_mark_invalidIndex_throwsInvalidTaskNumber() {
-        assertThrows(maybeweijunException.InvalidTaskNumberException.class,
+        assertThrows(MaybeWeijunException.InvalidTaskNumberException.class,
                 () -> Parser.process("mark 1", tasks, ui));
     }
 
     @Test
     void process_mark_badNumber_throwsInvalidMark() {
-        assertThrows(maybeweijunException.InvalidMarkException.class,
+        assertThrows(MaybeWeijunException.InvalidMarkException.class,
                 () -> Parser.process("mark xyz", tasks, ui));
     }
 
@@ -212,13 +212,13 @@ class ParserTest {
 
     @Test
     void process_unmark_invalidIndex_throwsInvalidTaskNumber() {
-        assertThrows(maybeweijunException.InvalidTaskNumberException.class,
+        assertThrows(MaybeWeijunException.InvalidTaskNumberException.class,
                 () -> Parser.process("unmark 2", tasks, ui));
     }
 
     @Test
     void process_unmark_badNumber_throwsInvalidUnmark() {
-        assertThrows(maybeweijunException.InvalidUnmarkException.class,
+        assertThrows(MaybeWeijunException.InvalidUnmarkException.class,
                 () -> Parser.process("unmark abc", tasks, ui));
     }
 
@@ -236,25 +236,25 @@ class ParserTest {
 
     @Test
     void process_delete_invalidIndex_throwsInvalidTaskNumber() {
-        assertThrows(maybeweijunException.InvalidTaskNumberException.class,
+        assertThrows(MaybeWeijunException.InvalidTaskNumberException.class,
                 () -> Parser.process("delete 3", tasks, ui));
     }
 
     @Test
     void process_delete_badNumber_throwsInvalidDelete() {
-        assertThrows(maybeweijunException.InvalidDeleteException.class,
+        assertThrows(MaybeWeijunException.InvalidDeleteException.class,
                 () -> Parser.process("delete NaN", tasks, ui));
     }
 
     @Test
     void process_invalidCommand_throwsInvalidCommand() {
-        assertThrows(maybeweijunException.InvalidCommandException.class,
+        assertThrows(MaybeWeijunException.InvalidCommandException.class,
                 () -> Parser.process("unknown", tasks, ui));
     }
 
     @Test
     void process_event_endBeforeStart_throwsInvalidDateRange() {
-        assertThrows(maybeweijunException.InvalidDateRangeException.class,
+        assertThrows(MaybeWeijunException.InvalidDateRangeException.class,
                 () -> Parser.process("event bad /from 2025-01-01 1200 /to 2025-01-01 1100", tasks, ui));
     }
 }

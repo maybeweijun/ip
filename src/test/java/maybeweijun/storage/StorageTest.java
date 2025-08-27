@@ -1,6 +1,5 @@
 package maybeweijun.storage;
 
-import maybeweijun.exception.maybeweijunException;
 import maybeweijun.task.Deadline;
 import maybeweijun.task.Event;
 import maybeweijun.task.Task;
