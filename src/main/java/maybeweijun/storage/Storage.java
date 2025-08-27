@@ -97,7 +97,9 @@ public class Storage {
 
 
     /**
-     * Lenient save: swallows IO issues, used by app runtime.
+     * Writes file to filePath, and for each task, write the corresponding
+     * task intoString the file.
+     * @param tasks List of tasks to be written to the file.
      */
     public void save(List<Task> tasks) {
         try (FileWriter writer = new FileWriter(filePath, false)) {
