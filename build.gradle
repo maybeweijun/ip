@@ -37,8 +37,7 @@ checkstyle {
     toolVersion = '11.0.0'
 }
 shadowJar {
-    archiveBaseName = "maybeweijun"
-    archiveClassifier = null
+    archiveFileName = 'maybeweijun.jar'
 }
 
 run{

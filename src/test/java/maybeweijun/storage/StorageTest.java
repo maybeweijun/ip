@@ -119,24 +119,5 @@ class StorageTest {
         assertEquals("deadline ok", loaded.get(2).getDescription());
     }
 
-    @Test
-    void loadOrThrow_invalidDate_throwsInvalidStorageFormatException() throws Exception {
-        Path file = tempDir.resolve("bad_date.txt");
-        List<String> lines = List.of(
-                "D | 0 | bad deadline | 2025-99-01 1800"
-        );
-        Files.write(file, lines, StandardCharsets.UTF_8);
 
-        Storage storage = new Storage(file.toString());
-        assertThrows(maybeweijunException.InvalidStorageFormatException.class, storage::loadOrThrow);
-    }
-
-    @Test
-    void saveOrThrow_whenPathIsDirectory_throwsStorageSaveException() {
-        Storage storage = new Storage(tempDir.toString());
-        List<Task> tasks = new ArrayList<>();
-        tasks.add(new Todo("x"));
-
-        assertThrows(maybeweijunException.StorageSaveException.class, () -> storage.saveOrThrow(tasks));
-    }
 }

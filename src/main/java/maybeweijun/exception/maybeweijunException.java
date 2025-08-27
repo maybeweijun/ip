@@ -1,5 +1,9 @@
 package maybeweijun.exception;
 
+/**
+ * Root exception type for the application. Specific error cases are represented
+ * as nested static subclasses to provide semantic meaning and user-friendly messages.
+ */
 public class maybeweijunException extends Exception {
     public maybeweijunException() {
         super();
