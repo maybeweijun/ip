@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import maybeweijun.exception.MaybeWeijunException;
+import maybeweijun.exception.maybeweijunException;
 import maybeweijun.task.Deadline;
 import maybeweijun.task.Event;
 import maybeweijun.task.Task;
@@ -87,7 +87,7 @@ public class Storage {
     /**
      * Strict load: throws on IO or malformed content.
      */
-    public List<Task> loadOrThrow() throws MaybeWeijunException {
+    public List<Task> loadOrThrow() throws maybeweijunException {
         ArrayList<Task> tasks = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
@@ -96,7 +96,7 @@ public class Storage {
                 lineNo++;
                 String[] parts = line.split("\\|");
                 if (parts.length < 3) {
-                    throw new MaybeWeijunException.InvalidStorageFormatException(
+                    throw new maybeweijunException.InvalidStorageFormatException(
                             "Malformed line " + lineNo + ": " + line);
                 }
                 String type = parts[0].trim();
@@ -113,7 +113,7 @@ public class Storage {
                         }
                         case "D": {
                             if (parts.length < 4) {
-                                throw new MaybeWeijunException.InvalidStorageFormatException(
+                                throw new maybeweijunException.InvalidStorageFormatException(
                                         "Missing deadline datetime at line " + lineNo + ": " + line);
                             }
                             String by = parts[3].trim();
@@ -124,12 +124,12 @@ public class Storage {
                         }
                         case "E": {
                             if (parts.length < 4) {
-                                throw new MaybeWeijunException.InvalidStorageFormatException(
+                                throw new maybeweijunException.InvalidStorageFormatException(
                                         "Missing event datetime(s) at line " + lineNo + ": " + line);
                             }
                             String[] eventTimes = parts[3].split(" to ", 2);
                             if (eventTimes.length != 2) {
-                                throw new MaybeWeijunException.InvalidStorageFormatException(
+                                throw new maybeweijunException.InvalidStorageFormatException(
                                         "Invalid event times at line " + lineNo + ": " + line);
                             }
                             String from = eventTimes[0].trim();
@@ -140,16 +140,16 @@ public class Storage {
                             break;
                         }
                         default:
-                            throw new MaybeWeijunException.InvalidStorageFormatException(
+                            throw new maybeweijunException.InvalidStorageFormatException(
                                     "Unknown task type at line " + lineNo + ": " + type);
                     }
                 } catch (RuntimeException ex) {
-                    throw new MaybeWeijunException.InvalidStorageFormatException(
+                    throw new maybeweijunException.InvalidStorageFormatException(
                             "Invalid date/time or content at line " + lineNo + ": " + line);
                 }
             }
         } catch (IOException e) {
-            throw new MaybeWeijunException.StorageLoadException("Failed to load state: " + e.getMessage());
+            throw new maybeweijunException.StorageLoadException("Failed to load state: " + e.getMessage());
         }
         return tasks;
     }
@@ -190,7 +190,7 @@ public class Storage {
     /**
      * Strict save: throws on IO errors.
      */
-    public void saveOrThrow(List<Task> tasks) throws MaybeWeijunException {
+    public void saveOrThrow(List<Task> tasks) throws maybeweijunException {
         try (FileWriter writer = new FileWriter(filePath, false)) {
             for (Task task : tasks) {
                 StringBuilder sb = new StringBuilder();
@@ -216,7 +216,7 @@ public class Storage {
                 writer.write(System.lineSeparator());
             }
         } catch (IOException e) {
-            throw new MaybeWeijunException.StorageSaveException("Failed to save state: " + e.getMessage());
+            throw new maybeweijunException.StorageSaveException("Failed to save state: " + e.getMessage());
         }
     }
 }

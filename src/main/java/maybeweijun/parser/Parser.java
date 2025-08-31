@@ -3,7 +3,7 @@ package maybeweijun.parser;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import maybeweijun.exception.MaybeWeijunException;
+import maybeweijun.exception.maybeweijunException;
 import maybeweijun.task.Deadline;
 import maybeweijun.task.Event;
 import maybeweijun.task.Task;
@@ -13,7 +13,7 @@ import maybeweijun.ui.Ui;
 
 public class Parser {
 
-    public static boolean process(String input, TaskList tasks, Ui ui) throws MaybeWeijunException {
+    public static boolean process(String input, TaskList tasks, Ui ui) throws maybeweijunException {
         if (input == null) {
             return false;
         }
@@ -30,11 +30,11 @@ public class Parser {
         } else if (input.startsWith("delete ")) {
             handleDelete(tasks, input, ui);
         } else if (input.equals("todo")) {
-            throw new MaybeWeijunException.OnlyTodoException();
+            throw new maybeweijunException.OnlyTodoException();
         } else if (input.equals("deadline")) {
-            throw new MaybeWeijunException.OnlyDeadlineException();
+            throw new maybeweijunException.OnlyDeadlineException();
         } else if (input.equals("event")) {
-            throw new MaybeWeijunException.OnlyEventException();
+            throw new maybeweijunException.OnlyEventException();
         } else if (input.startsWith("todo")) {
             handleTodo(tasks, input, ui);
         } else if (input.startsWith("deadline")) {
@@ -44,7 +44,7 @@ public class Parser {
         } else if (input.startsWith("find ")) {
             handleFind(tasks, input, ui);
         } else {
-            throw new MaybeWeijunException.InvalidCommandException();
+            throw new maybeweijunException.InvalidCommandException();
         }
         return false;
     }
@@ -53,35 +53,35 @@ public class Parser {
         ui.printTaskList(tasks);
     }
 
-    private static void handleMark(TaskList tasks, String input, Ui ui) throws MaybeWeijunException {
+    private static void handleMark(TaskList tasks, String input, Ui ui) throws maybeweijunException {
         try {
             int idx = Integer.parseInt(input.substring(5).trim()) - 1;
             if (tasks.isValidIndex(idx)) {
                 tasks.get(idx).mark();
                 ui.printMarked(idx + 1, tasks.get(idx));
             } else {
-                throw new MaybeWeijunException.InvalidTaskNumberException();
+                throw new maybeweijunException.InvalidTaskNumberException();
             }
         } catch (NumberFormatException e) {
-            throw new MaybeWeijunException.InvalidMarkException();
+            throw new maybeweijunException.InvalidMarkException();
         }
     }
 
-    private static void handleUnmark(TaskList tasks, String input, Ui ui) throws MaybeWeijunException {
+    private static void handleUnmark(TaskList tasks, String input, Ui ui) throws maybeweijunException {
         try {
             int idx = Integer.parseInt(input.substring(7).trim()) - 1;
             if (tasks.isValidIndex(idx)) {
                 tasks.get(idx).unmark();
                 ui.printUnmarked(idx + 1, tasks.get(idx));
             } else {
-                throw new MaybeWeijunException.InvalidTaskNumberException();
+                throw new maybeweijunException.InvalidTaskNumberException();
             }
         } catch (NumberFormatException e) {
-            throw new MaybeWeijunException.InvalidUnmarkException();
+            throw new maybeweijunException.InvalidUnmarkException();
         }
     }
 
-    private static void handleDelete(TaskList tasks, String input, Ui ui) throws MaybeWeijunException {
+    private static void handleDelete(TaskList tasks, String input, Ui ui) throws maybeweijunException {
         try {
             int idx = Integer.parseInt(input.substring(7).trim()) - 1;
             if (tasks.isValidIndex(idx)) {
@@ -89,10 +89,10 @@ public class Parser {
                 tasks.remove(idx);
                 ui.printDeleted(toRemove, tasks.size());
             } else {
-                throw new MaybeWeijunException.InvalidTaskNumberException();
+                throw new maybeweijunException.InvalidTaskNumberException();
             }
         } catch (NumberFormatException e) {
-            throw new MaybeWeijunException.InvalidDeleteException();
+            throw new maybeweijunException.InvalidDeleteException();
         }
     }
 
@@ -102,12 +102,12 @@ public class Parser {
      * @param tasks
      * @param input
      * @param ui
-     * @throws MaybeWeijunException
+     * @throws maybeweijunException
      */
-    private static void handleFind(TaskList tasks, String input, Ui ui) throws MaybeWeijunException {
+    private static void handleFind(TaskList tasks, String input, Ui ui) throws maybeweijunException {
         String description = input.substring(5).trim(); // Retrieve description
         if (description.isEmpty()) {
-            throw new MaybeWeijunException.EmptyFindException();
+            throw new maybeweijunException.EmptyFindException();
         }
         TaskList foundTasks = new TaskList();
         for (int i = 0; i < tasks.size(); i++) {
@@ -118,37 +118,37 @@ public class Parser {
         }
         ui.printTaskList(foundTasks);
     }
-    private static void handleTodo(TaskList tasks, String input, Ui ui) throws MaybeWeijunException {
+    private static void handleTodo(TaskList tasks, String input, Ui ui) throws maybeweijunException {
         String description = input.substring(5).trim();
         if (description.isEmpty()) {
-            throw new MaybeWeijunException.EmptyTodoException();
+            throw new maybeweijunException.EmptyTodoException();
         }
         tasks.add(new Todo(description));
         printTaskAdded(tasks, ui);
     }
 
-    private static void handleDeadline(TaskList tasks, String input, Ui ui) throws MaybeWeijunException {
+    private static void handleDeadline(TaskList tasks, String input, Ui ui) throws maybeweijunException {
         String[] parts = input.substring(9).split("/by", 2);
         if (parts.length == 2) {
             String description = parts[0].trim();
             String by = parts[1].trim();
             if (description.isEmpty() || by.isEmpty()) {
-                throw new MaybeWeijunException.EmptyDeadlineException();
+                throw new maybeweijunException.EmptyDeadlineException();
             }
             try {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
                 LocalDateTime.parse(by, formatter);
             } catch (Exception e) {
-                throw new MaybeWeijunException.InvalidDateTimeException();
+                throw new maybeweijunException.InvalidDateTimeException();
             }
             tasks.add(new Deadline(description, by));
             printTaskAdded(tasks, ui);
         } else {
-            throw new MaybeWeijunException.EmptyDeadlineException();
+            throw new maybeweijunException.EmptyDeadlineException();
         }
     }
 
-    private static void handleEvent(TaskList tasks, String input, Ui ui) throws MaybeWeijunException {
+    private static void handleEvent(TaskList tasks, String input, Ui ui) throws maybeweijunException {
         String[] parts = input.substring(5).split("/from", 2);
         if (parts.length == 2) {
             String description = parts[0].trim();
@@ -157,7 +157,7 @@ public class Parser {
                 String start_datetime = timeParts[0].trim();
                 String end_datetime = timeParts[1].trim();
                 if (description.isEmpty() || start_datetime.isEmpty() || end_datetime.isEmpty()) {
-                    throw new MaybeWeijunException.EmptyEventException();
+                    throw new maybeweijunException.EmptyEventException();
                 }
                 LocalDateTime start;
                 LocalDateTime end;
@@ -166,18 +166,18 @@ public class Parser {
                     start = LocalDateTime.parse(start_datetime, formatter);
                     end = LocalDateTime.parse(end_datetime, formatter);
                 } catch (Exception e) {
-                    throw new MaybeWeijunException.InvalidDateTimeException();
+                    throw new maybeweijunException.InvalidDateTimeException();
                 }
                 if (!end.isAfter(start)) {
-                    throw new MaybeWeijunException.InvalidDateRangeException();
+                    throw new maybeweijunException.InvalidDateRangeException();
                 }
                 tasks.add(new Event(description, start_datetime, end_datetime));
                 printTaskAdded(tasks, ui);
             } else {
-                throw new MaybeWeijunException.EmptyEventException();
+                throw new maybeweijunException.EmptyEventException();
             }
         } else {
-            throw new MaybeWeijunException.EmptyEventException();
+            throw new maybeweijunException.EmptyEventException();
         }
     }
 
