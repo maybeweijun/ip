@@ -3,6 +3,20 @@ package maybeweijun.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Objects;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.scene.image.Image;
+
+import javafx.fxml.FXMLLoader;
+
 
 import maybeweijun.parser.Parser;
 import maybeweijun.storage.Storage;
@@ -12,10 +26,22 @@ import maybeweijun.task.TaskList;
  * Entry point for the application. Initializes storage, ui, and task list,
  * then reads user input in a loop and delegates command processing to the parser.
  */
-public class MaybeWeijun {
+public class MaybeWeijun extends Application {
     private static final Storage STORAGE = new Storage("src/main/java/maybeweijun/storage/state.txt");
     private static final Ui UI = new Ui();
     private static final TaskList tasks = new TaskList(STORAGE.load());
+    private static final String DEFAULT_FILE_PATH = "src/main/java/maybeweijun/storage/state.txt";
+
+    private ScrollPane scrollPane;
+    private VBox dialogContainer;
+    private TextField userInput;
+    private Button sendButton;
+    private Scene scene;
+
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
+    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private Duke duke = new Duke();
+
 
     /**
      * Starts the application.
@@ -23,10 +49,25 @@ public class MaybeWeijun {
      * @param args CLI arguments (unused)
      */
     public static void main(String[] args) {
-        printLogo();
-        printQuery();
-        handleUserInput();
+        // Launch the JavaFX application; GUI will handle user interaction via Parser.
+        Application.launch(args);
     }
+
+
+    @Override
+    public void start(Stage stage) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MaybeWeijun.class.getResource("/view/MainWindow.fxml"));
+            AnchorPane ap = fxmlLoader.load();
+            Scene scene = new Scene(ap);
+            stage.setScene(scene);
+            fxmlLoader.<MainWindow>getController().setDuke(duke);  // inject the Duke instance
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Prints the application logo via the UI.
