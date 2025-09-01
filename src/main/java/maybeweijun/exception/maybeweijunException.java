@@ -15,7 +15,7 @@ public class maybeweijunException extends Exception {
 
     public static class InvalidCommandException extends maybeweijunException {
         public InvalidCommandException() {
-            super("Unknown command. Please use 'todo', 'deadline', 'mark', 'unmark', or 'list'.");
+            super("You... Please use 'todo', 'deadline', 'mark', 'unmark', or 'list'.");
         }
     }
 

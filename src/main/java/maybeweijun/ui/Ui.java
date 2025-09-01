@@ -12,8 +12,8 @@ public class Ui {
      * Prints the application logo and a greeting.
      */
     public void printLogo() {
-        String logo = "[m-a-y-b-e-w-e-i-j-u-n]";
-        System.out.println("Hello from\n" + logo + "\n");
+
+        System.out.println("Bow before Muzan, and I will keep track of your tasks.\n");
     }
 
     /**

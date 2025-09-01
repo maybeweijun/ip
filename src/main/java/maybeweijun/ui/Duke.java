@@ -27,8 +27,8 @@ public class Duke {
      * Returns the initial greeting shown in the GUI.
      */
     public String getGreeting() {
-        String logo = "[m-a-y-b-e-w-e-i-j-u-n]";
-        return "Hello from\n" + logo + "\n\nWhat can I do for you? \n";
+
+        return "Bow before Muzan, and I will keep track of your tasks.\n";
     }
 
     /**
