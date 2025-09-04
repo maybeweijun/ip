@@ -13,6 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.beans.binding.Bindings;
+import javafx.scene.shape.Circle;
 
 /**
  * Represents a dialog box consisting of an ImageView to represent the speaker's face
@@ -36,6 +38,29 @@ public class DialogBox extends HBox {
 
         dialog.setText(text);
         displayPicture.setImage(img);
+        // Make the avatar circular
+        applyCircularClip(displayPicture);
+    }
+
+    /**
+     * Applies a circular clip to the given ImageView so it renders as a circle.
+     * The circle auto-adjusts to the ImageView's fit dimensions.
+     *
+     * @param iv the ImageView to clip
+     */
+    private void applyCircularClip(ImageView iv) {
+        Circle clip = new Circle();
+        clip.radiusProperty().bind(Bindings.createDoubleBinding(
+                () -> Math.min(iv.getFitWidth(), iv.getFitHeight()) / 2.0,
+                iv.fitWidthProperty(), iv.fitHeightProperty()
+        ));
+        clip.centerXProperty().bind(Bindings.createDoubleBinding(
+                () -> iv.getFitWidth() / 2.0, iv.fitWidthProperty()
+        ));
+        clip.centerYProperty().bind(Bindings.createDoubleBinding(
+                () -> iv.getFitHeight() / 2.0, iv.fitHeightProperty()
+        ));
+        iv.setClip(clip);
     }
 
     /**

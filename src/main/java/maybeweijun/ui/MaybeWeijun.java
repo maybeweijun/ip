@@ -60,6 +60,8 @@ public class MaybeWeijun extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(MaybeWeijun.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
+            // Apply Demon Slayer Infinity Castle background
+            scene.getStylesheets().add(MaybeWeijun.class.getResource("/view/demon_slayer.css").toExternalForm());
             stage.setScene(scene);
             fxmlLoader.<MainWindow>getController().setDuke(duke);  // inject the Duke instance
             stage.show();
