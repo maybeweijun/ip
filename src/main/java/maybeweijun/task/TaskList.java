@@ -49,6 +49,7 @@ public class TaskList {
      * @throws IndexOutOfBoundsException if index is out of range
      */
     public Task get(int index) {
+        assert index >= 0 && index < tasks.size() : "Index out of bounds: " + index;
         return tasks.get(index);
     }
 
