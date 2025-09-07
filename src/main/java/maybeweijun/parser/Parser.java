@@ -2,6 +2,9 @@ package maybeweijun.parser;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 import maybeweijun.exception.maybeweijunException;
 import maybeweijun.task.Deadline;
@@ -70,7 +73,16 @@ public class Parser {
     }
 
     private static void printTaskList(TaskList tasks, Ui ui) {
-        ui.printTaskList(tasks);
+        List<Task> copy = new ArrayList<>(tasks.toList());
+        copy.sort(Comparator.comparingInt(Parser::categoryRank));
+        ui.printTaskList(new TaskList(copy));
+    }
+
+    private static int categoryRank(Task t) {
+        if (t instanceof Todo) return 0;
+        if (t instanceof Deadline) return 1;
+        if (t instanceof Event) return 2;
+        return Integer.MAX_VALUE;
     }
 
     private static void handleMark(TaskList tasks, String input, Ui ui) throws maybeweijunException {
