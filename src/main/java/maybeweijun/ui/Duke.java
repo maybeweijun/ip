@@ -11,6 +11,7 @@ import maybeweijun.task.TaskList;
 public class Duke {
     private static final String DEFAULT_FILE_PATH = "src/main/java/maybeweijun/storage/state.txt";
 
+
     private final Storage storage;
     private final TaskList tasks;
     private final GuiUi ui;

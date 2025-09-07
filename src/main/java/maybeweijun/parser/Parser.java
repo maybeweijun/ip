@@ -15,6 +15,8 @@ public class Parser {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
+
+
     // Command strings to avoid magic numbers for substring indices
     private static final String CMD_BYE = "bye";
     private static final String CMD_LIST = "list";
