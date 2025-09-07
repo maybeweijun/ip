@@ -21,6 +21,8 @@ import javafx.scene.shape.Circle;
  * and a label containing text from the speaker.
  */
 public class DialogBox extends HBox {
+    private static final double HALF_DIVISOR = 2.0;
+
     @FXML
     private Label dialog;
     @FXML
@@ -51,14 +53,14 @@ public class DialogBox extends HBox {
     private void applyCircularClip(ImageView iv) {
         Circle clip = new Circle();
         clip.radiusProperty().bind(Bindings.createDoubleBinding(
-                () -> Math.min(iv.getFitWidth(), iv.getFitHeight()) / 2.0,
+                () -> Math.min(iv.getFitWidth(), iv.getFitHeight()) / HALF_DIVISOR,
                 iv.fitWidthProperty(), iv.fitHeightProperty()
         ));
         clip.centerXProperty().bind(Bindings.createDoubleBinding(
-                () -> iv.getFitWidth() / 2.0, iv.fitWidthProperty()
+                () -> iv.getFitWidth() / HALF_DIVISOR, iv.fitWidthProperty()
         ));
         clip.centerYProperty().bind(Bindings.createDoubleBinding(
-                () -> iv.getFitHeight() / 2.0, iv.fitHeightProperty()
+                () -> iv.getFitHeight() / HALF_DIVISOR, iv.fitHeightProperty()
         ));
         iv.setClip(clip);
     }
