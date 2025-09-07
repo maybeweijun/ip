@@ -1,6 +1,5 @@
 /* Demon Slayer Infinity Castle themed background */
 .root {
-    -fx-background-image: url("https://static.wikia.nocookie.net/kimetsu-no-yaiba/images/1/10/Infinity_Castle_Anime.png");
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
     -fx-background-size: cover;
