@@ -36,6 +36,9 @@ public class Duke {
      * Also persists state after each command and tracks exit requests.
      */
     public String getResponse(String input) {
+        assert ui != null : "Ui must be initialized";
+        assert storage != null : "Storage must be initialized";
+        assert tasks != null : "TaskList must be initialized";
         ui.clear();
         try {
             boolean shouldExit = Parser.process(input, tasks, ui);

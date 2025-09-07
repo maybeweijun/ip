@@ -88,6 +88,7 @@ public class Storage {
      * Lenient save: swallows IO issues, used by app runtime.
      */
     public void save(List<Task> tasks) {
+        assert tasks != null : "Tasks to save must not be null";
         try (FileWriter writer = new FileWriter(filePath, false)) {
             for (Task task : tasks) {
                 StringBuilder sb = new StringBuilder();
