@@ -19,3 +19,10 @@ Prompt : Add class-level Javadoc to all classes.
 Output : Added class-level Javadoc to all classes.
 Reason : To save time as I have already commented out previously what the purpose of each class is
 method-level javadoc has been omitted from the AI as the AI might not 100% understand what I am trying to do in each method
+
+
+ip week 5
+Class affected: Storage.java
+Prompt: How can I make my code quality better for the class?
+Output: The methods load and save are not very readable, I will refactor them to make them more readable.
+Learning: Gen AI is not very good at making code more readable, if anything it made it more messy
