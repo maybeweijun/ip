@@ -44,7 +44,7 @@ public class Ui {
     }
 
     /**
-     * Prints feedback indicating a task was unmarked.
+     * Prints feedback indicating a task was unmarked
      *
      * @param oneBasedIndex the task index shown to the user
      * @param task          the affected task
