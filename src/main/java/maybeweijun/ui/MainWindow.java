@@ -33,6 +33,7 @@ public class MainWindow extends AnchorPane {
 
     /** Injects the Duke instance */
     public void setDuke(Duke d) {
+        assert d != null : "Duke instance must not be null";
         duke = d;
         // Show initial greeting from Duke
         dialogContainer.getChildren().add(
@@ -47,7 +48,9 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
+        assert input != null : "User input text should not be null";
         String response = duke.getResponse(input);
+        assert response != null : "Duke response should not be null";
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getDukeDialog(response, dukeImage)
