@@ -23,7 +23,7 @@ public class Storage {
     }
 
     /**
-     * Lenient load: returns whatever can be parsed, skips malformed lines, and swallows IO issues.
+     * Lenient load: returns whatever can be parsed, skips malformed lines, and swallows IO issues
      */
     public List<Task> load() {
         ArrayList<Task> tasks = new ArrayList<>();
