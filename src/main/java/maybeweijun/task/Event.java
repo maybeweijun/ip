@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
  * Represents a time-bounded event with a start and end {@link LocalDateTime}.
  */
 public class Event extends Task {
+
     protected LocalDateTime from;
     protected LocalDateTime to;
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");

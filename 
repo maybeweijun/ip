@@ -1,0 +1,23 @@
+Improve code quality
+
+Currently there are some methods that are longer than 30 lines
+
+This will heavily affect the readability of the code
+
+Methods longer than 30 LoC has been changed where possible
+
+This has been achieved by breaking up code into more short methods
+
+Some methods are not possible to make shorter such as load and save
+methods, will try to improve where possible
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch branch-A-CodeQuality
+# Changes to be committed:
+#	modified:   src/main/java/maybeweijun/parser/Parser.java
+#	modified:   src/main/java/maybeweijun/storage/Storage.java
+#	modified:   src/main/java/maybeweijun/task/Deadline.java
+#	modified:   src/main/java/maybeweijun/task/Event.java
+#	modified:   src/main/java/maybeweijun/ui/Duke.java
+#

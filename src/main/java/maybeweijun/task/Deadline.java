@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
  * The internal timestamp is stored as a {@link LocalDateTime}.
  */
 public class Deadline extends Task {
+
     protected LocalDateTime by;
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
     private static final DateTimeFormatter PRINT_FORMATTER = DateTimeFormatter.ofPattern("MMM d yyyy ha");
