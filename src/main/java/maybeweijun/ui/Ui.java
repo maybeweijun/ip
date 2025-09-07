@@ -8,20 +8,7 @@ import maybeweijun.task.TaskList;
  * It formats and prints messages for task operations and general prompts.
  */
 public class Ui {
-    /**
-     * Prints the application logo and a greeting.
-     */
-    public void printLogo() {
 
-        System.out.println("Bow before Muzan, and I will keep track of your tasks.\n");
-    }
-
-    /**
-     * Prints the initial prompt asking for user input.
-     */
-    public void printQuery() {
-        System.out.println("What can I do for you? \n");
-    }
 
     /**
      * Prints the list of tasks with their 1-based indices.
@@ -79,12 +66,6 @@ public class Ui {
         System.out.println("Now you have " + remainingCount + " tasks in the list.");
     }
 
-    /**
-     * Prints the exit message.
-     */
-    public void printExit() {
-        System.out.println("Bye. Hope to see you again soon!\n");
-    }
 
     /**
      * Prints an error message.

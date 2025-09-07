@@ -63,10 +63,6 @@ public class GuiUi extends Ui {
               .append(" tasks in the list.\n");
     }
 
-    @Override
-    public void printExit() {
-        buffer.append("Bye. Hope to see you again soon!\n\n");
-    }
 
     @Override
     public void printError(String message) {
