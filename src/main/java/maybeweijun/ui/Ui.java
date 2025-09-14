@@ -4,8 +4,7 @@ import maybeweijun.task.Task;
 import maybeweijun.task.TaskList;
 
 /**
- * Ui handles all user-facing console output for the application.
- * It formats and prints messages for task operations and general prompts.
+ * Provides user-facing console output and formatting for task operations and general prompts.
  */
 public class Ui {
 

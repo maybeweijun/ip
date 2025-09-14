@@ -17,8 +17,7 @@ import javafx.beans.binding.Bindings;
 import javafx.scene.shape.Circle;
 
 /**
- * Represents a dialog box consisting of an ImageView to represent the speaker's face
- * and a label containing text from the speaker.
+ * Represents a dialog box displaying speaker text alongside an avatar image in the GUI.
  */
 public class DialogBox extends HBox {
     private static final double HALF_DIVISOR = 2.0;

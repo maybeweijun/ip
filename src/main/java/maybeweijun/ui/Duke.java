@@ -5,8 +5,7 @@ import maybeweijun.storage.Storage;
 import maybeweijun.task.TaskList;
 
 /**
- * Duke bridges the GUI and the core logic (Parser/TaskList/Storage).
- * It converts user input into responses suitable for display in the GUI.
+ * Bridges the GUI and core logic, converting user input into responses suitable for display in the GUI.
  */
 public class Duke {
     private static final String DEFAULT_FILE_PATH = "src/main/java/maybeweijun/storage/state.txt";

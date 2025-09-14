@@ -4,7 +4,7 @@ import maybeweijun.task.Task;
 import maybeweijun.task.TaskList;
 
 /**
- * GuiUi collects output into a buffer for the GUI instead of printing to the console.
+ * Collects output into an internal buffer for GUI display instead of printing to the console.
  */
 public class GuiUi extends Ui {
     private final StringBuilder buffer = new StringBuilder();
