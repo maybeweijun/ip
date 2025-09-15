@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TaskList is a simple OOP wrapper around an ArrayList of Task objects.
- * It exposes only the operations needed by the application code, helping to
- * encapsulate list operations and make future extensions easier.
+ * Encapsulates an ordered list of tasks, exposing only operations needed for application logic.
  */
 public class TaskList {
     private final ArrayList<Task> tasks;

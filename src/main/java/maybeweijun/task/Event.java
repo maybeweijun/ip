@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Represents a time-bounded event with a start and end {@link LocalDateTime}.
+ * Represents a time-bounded event with both start and end datetimes.
  */
 public class Event extends Task {
 

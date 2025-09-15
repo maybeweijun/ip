@@ -13,6 +13,9 @@ import maybeweijun.task.Event;
 import maybeweijun.task.Task;
 import maybeweijun.task.Todo;
 
+/**
+ * Handles loading and saving of tasks to persistent storage.
+ */
 public class Storage {
     private final String filePath;
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");

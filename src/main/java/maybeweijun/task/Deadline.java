@@ -4,8 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Represents a task that has a deadline at a specific date and time.
- * The internal timestamp is stored as a {@link LocalDateTime}.
+ * Represents a task with a deadline at a specific date and time.
  */
 public class Deadline extends Task {
 

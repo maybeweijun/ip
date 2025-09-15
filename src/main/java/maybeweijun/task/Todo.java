@@ -1,9 +1,7 @@
 package maybeweijun.task;
 
 /**
- * Represents a simple "to-do" task that contains only a textual description
- * and a completion status inherited from {@link Task}.
- * A {@code Todo} does not carry any date/time information.
+ * Represents a to-do task containing only a description and completion status, without date/time information.
  */
 public class Todo extends Task {
 

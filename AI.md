@@ -26,3 +26,10 @@ Class affected: Storage.java
 Prompt: How can I make my code quality better for the class?
 Output: The methods load and save are not very readable, I will refactor them to make them more readable.
 Learning: Gen AI is not very good at making code more readable, if anything it made it more messy
+
+
+ip week 6
+Class affected: Parser.java
+Prompt : Does my Parser.java javadocs fit the provided format as specified in the assignment? If not please make the necessary edits.
+Output : I have edited my Parser.java javadocs to fit the provided format as specified in the assignment.
+Learning : Gen AI is not very good at making javadocs, if anything it made it more messy.

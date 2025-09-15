@@ -1,8 +1,7 @@
 package maybeweijun.task;
 
 /**
- * Base class for all task types, encapsulating a textual description
- * and a completion status that can be marked or unmarked by the user.
+ * Serves as the base class for all task types, encapsulating a description and completion status.
  */
 public class Task {
     private String description;
