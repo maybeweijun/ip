@@ -3,12 +3,14 @@ package maybeweijun.ui;
 import maybeweijun.parser.Parser;
 import maybeweijun.storage.Storage;
 import maybeweijun.task.TaskList;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Bridges the GUI and core logic, converting user input into responses suitable for display in the GUI.
  */
 public class Duke {
-    private static final String DEFAULT_FILE_PATH = "src/main/java/maybeweijun/storage/state.txt";
+    private static final String DEFAULT_FILE_PATH = "data/state.txt";
 
 
     private final Storage storage;
@@ -18,6 +20,21 @@ public class Duke {
     private volatile boolean exitRequested = false;
 
     public Duke() {
+        // Ensure the "data" folder and "state.txt" file exist before using Storage.
+        File file = new File(DEFAULT_FILE_PATH);
+        File parent = file.getParentFile();
+        try {
+            if (parent != null && !parent.exists()) {
+                parent.mkdirs();
+            }
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+        } catch (IOException e) {
+            // If creation fails, continue — Storage.load/save are lenient and will handle IO issues.
+            // Optionally log the exception here.
+        }
+
         this.storage = new Storage(DEFAULT_FILE_PATH);
         this.tasks = new TaskList(storage.load());
         this.ui = new GuiUi();
