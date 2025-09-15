@@ -59,13 +59,13 @@ Supported task types:
 - **yyyy-MM-dd HHmm**: 2021-01-01 1200 corresponds to 12:00am on January 1, 2021
 
 ## Sample Session
-/todo homework
-/deadline proposal /by 2021-01-01 1200
-/event meeting /from 2021-01-01 1200 /to 2021-01-01 1300
-/list
-/sort
-/mark 1
-/unmark 2
-/delete 3
-/find homework
-/bye
+- /todo buy milk
+- /deadline buy milk /by 2021-01-01 1200
+- /event buy milk /from 2021-01-01 1200 /to 2021-01-01 1300
+- /list
+- /sort
+- /mark 1
+- /unmark 1
+- /delete 1
+- /find milk
+- /bye
