@@ -45,6 +45,7 @@ public class Parser {
     private static final String CMD_DEADLINE = "deadline";
     private static final String CMD_EVENT = "event";
     private static final String CMD_FIND = "find ";
+    private static final String CMD_SORT = "sort";
 
     // Shared numeric constants
     private static final int SPLIT_LIMIT_TWO = 2;
@@ -55,8 +56,9 @@ public class Parser {
      * Parses the given user input and executes the corresponding command on the provided tasks.
      *
      * <p>This method recognizes commands such as adding todos, deadlines and events,
-     * listing tasks, marking/unmarking, deleting, and finding tasks. It trims the input,
-     * routes the command to the appropriate handler, and uses {@link Ui} for user output.
+     * listing tasks, marking/unmarking, deleting, finding tasks and sorting the list.
+     * It trims the input, routes the command to the appropriate handler, and uses {@link Ui}
+     * for user output.
      *
      * @param input the raw user input string (may be null)
      * @param tasks the task list to operate on
@@ -75,6 +77,8 @@ public class Parser {
             return true;
         } else if (input.equalsIgnoreCase(CMD_LIST)) {
             printTaskList(tasks, ui);
+        } else if (input.equalsIgnoreCase(CMD_SORT)) {
+            printSortedTaskList(tasks, ui);
         } else if (input.startsWith(CMD_MARK)) {
             handleMark(tasks, input, ui);
         } else if (input.startsWith(CMD_UNMARK)) {
@@ -102,6 +106,22 @@ public class Parser {
     }
 
     /**
+     * Prints a new TaskList sorted by task description (case-insensitive).
+     *
+     * <p>A shallow copy of the original list is created and sorted by {@link Task#getDescription()}
+     * using a case-insensitive comparator so the original list order remains unchanged.
+     * The resulting sorted list is printed via {@link Ui#printTaskList(TaskList)}.
+     *
+     * @param tasks the task list to sort and print
+     * @param ui    the user interface used to print the sorted list
+     */
+    private static void printSortedTaskList(TaskList tasks, Ui ui) {
+        List<Task> copy = new ArrayList<>(tasks.toList());
+        copy.sort(Comparator.comparingInt(Parser::categoryRank));
+        ui.printTaskList(new TaskList(copy));
+    }
+
+    /**
      * Sorts the provided task list by category and prints the sorted list via {@link Ui}.
      *
      * <p>A shallow copy of the list is created and sorted using {@link #categoryRank(Task)}
@@ -111,9 +131,7 @@ public class Parser {
      * @param ui    the user interface used to print the resulting list
      */
     private static void printTaskList(TaskList tasks, Ui ui) {
-        List<Task> copy = new ArrayList<>(tasks.toList());
-        copy.sort(Comparator.comparingInt(Parser::categoryRank));
-        ui.printTaskList(new TaskList(copy));
+        ui.printTaskList(tasks);
     }
 
     /**

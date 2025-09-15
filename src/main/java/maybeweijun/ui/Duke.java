@@ -28,7 +28,7 @@ public class Duke {
      */
     public String getGreeting() {
 
-        return "Bow before Muzan, and I will keep track of your tasks.\n";
+        return "Bow before MaybeWeijun, and I will keep track of your tasks.\n";
     }
 
     /**
