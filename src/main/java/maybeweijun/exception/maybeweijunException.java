@@ -15,9 +15,11 @@ public class maybeweijunException extends Exception {
 
     public static class InvalidCommandException extends maybeweijunException {
         public InvalidCommandException() {
-            super("You... Please use 'todo', 'deadline', 'mark', 'unmark', 'find', 'sort' or 'list'.");
+            super("You... Please use 'todo', 'deadline', 'event', 'mark', 'unmark', 'find', 'sort' or 'list'.");
         }
     }
+
+
 
     public static class EmptyFindException extends maybeweijunException {
         public EmptyFindException() {
@@ -99,6 +101,12 @@ public class maybeweijunException extends Exception {
     public static class InvalidUnmarkException extends maybeweijunException {
         public InvalidUnmarkException() {
             super("Please provide a valid task number to unmark.");
+        }
+    }
+
+    public static class EmptyListException extends maybeweijunException {
+        public EmptyListException() {
+            super("The list is empty, please populate the list with tasks first");
         }
     }
 

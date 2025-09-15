@@ -115,7 +115,10 @@ public class Parser {
      * @param tasks the task list to sort and print
      * @param ui    the user interface used to print the sorted list
      */
-    private static void printSortedTaskList(TaskList tasks, Ui ui) {
+    private static void printSortedTaskList(TaskList tasks, Ui ui) throws maybeweijunException {
+        if (tasks.size() == 0) {
+            throw new maybeweijunException.EmptyListException();
+        }
         List<Task> copy = new ArrayList<>(tasks.toList());
         copy.sort(Comparator.comparingInt(Parser::categoryRank));
         ui.printTaskList(new TaskList(copy));
@@ -130,7 +133,10 @@ public class Parser {
      * @param tasks the task list to sort and print
      * @param ui    the user interface used to print the resulting list
      */
-    private static void printTaskList(TaskList tasks, Ui ui) {
+    private static void printTaskList(TaskList tasks, Ui ui) throws maybeweijunException {
+        if (tasks.size() == 0) {
+            throw new maybeweijunException.EmptyListException();
+        }
         ui.printTaskList(tasks);
     }
 
@@ -162,6 +168,9 @@ public class Parser {
      * @throws maybeweijunException when the index is invalid or cannot be parsed
      */
     private static void handleMark(TaskList tasks, String input, Ui ui) throws maybeweijunException {
+        if (tasks.size() == 0) {
+            throw new maybeweijunException.EmptyListException();
+        }
         try {
             int idx = Integer.parseInt(input.substring(CMD_MARK.length()).trim()) - ONE_BASED_OFFSET;
             if (tasks.isValidIndex(idx)) {
@@ -187,6 +196,9 @@ public class Parser {
      * @throws maybeweijunException when the index is invalid or cannot be parsed
      */
     private static void handleUnmark(TaskList tasks, String input, Ui ui) throws maybeweijunException {
+        if (tasks.size() == 0) {
+            throw new maybeweijunException.EmptyListException();
+        }
         try {
             int idx = Integer.parseInt(input.substring(CMD_UNMARK.length()).trim()) - ONE_BASED_OFFSET;
             if (tasks.isValidIndex(idx)) {
@@ -213,6 +225,9 @@ public class Parser {
      * @throws maybeweijunException when the index is invalid or cannot be parsed
      */
     private static void handleDelete(TaskList tasks, String input, Ui ui) throws maybeweijunException {
+        if (tasks.size() == 0) {
+            throw new maybeweijunException.EmptyListException();
+        }
         try {
             int idx = Integer.parseInt(input.substring(CMD_DELETE.length()).trim()) - ONE_BASED_OFFSET;
             if (tasks.isValidIndex(idx)) {
@@ -239,6 +254,9 @@ public class Parser {
      * @throws maybeweijunException when the search keyword is empty
      */
     private static void handleFind(TaskList tasks, String input, Ui ui) throws maybeweijunException {
+        if (tasks.size() == 0) {
+            throw new maybeweijunException.EmptyListException();
+        }
         String description = input.substring(CMD_FIND.length()).trim();
         if (description.isEmpty()) {
             throw new maybeweijunException.EmptyFindException();
