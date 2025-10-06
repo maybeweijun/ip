@@ -44,28 +44,28 @@ Supported task types:
 3. Read the response and continue!
 
 ## Command Overview
-- **Todo**: /todo <task>
-- **Deadline**: /deadline <task> /by <due date/time>
-- **Event**: /event <task> /from <start date/time> /to <end date/time>
-- **List**: /list
-- **Sort**: /sort 
-- **Mark**: /mark <task_no>
-- **Unmark**: /unmark <task_no>
-- **Delete**: /delete <task_no>
-- **Find**: /find <task_name>
-- **Bye**: /bye
+- **Todo**: todo <task>
+- **Deadline**: deadline <task> /by <due date/time>
+- **Event**: event <task> /from <start date/time> /to <end date/time>
+- **List**: list
+- **Sort**: sort 
+- **Mark**: mark <task_no>
+- **Unmark**: unmark <task_no>
+- **Delete**: delete <task_no>
+- **Find**: find <task_name>
+- **Bye**: bye
 
 ## Date/Time Format
 - **yyyy-MM-dd HHmm**: 2021-01-01 1200 corresponds to 12:00am on January 1, 2021
 
 ## Sample Session
-- /todo buy milk
-- /deadline buy milk /by 2021-01-01 1200
-- /event buy milk /from 2021-01-01 1200 /to 2021-01-01 1300
-- /list
-- /sort
-- /mark 1
-- /unmark 1
-- /delete 1
-- /find milk
-- /bye
+- todo buy milk
+- deadline buy milk /by 2021-01-01 1200
+- event buy milk /from 2021-01-01 1200 /to 2021-01-01 1300
+- list
+- sort
+- mark 1
+- unmark 1
+- delete 1
+- find milk
+- bye
